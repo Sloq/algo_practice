@@ -75,7 +75,6 @@ def add_two_numbers(l1, l2)
     b_val = 0
     roll_over = 0
     sum_array = []
-    next_node = []
     until a_ended && b_ended && roll_over == 0
         if a_ended
             a_val = 0
@@ -89,7 +88,7 @@ def add_two_numbers(l1, l2)
             b_val = current_b.val
             current_b = current_b.next
         end
-        sum_array.unshift((a_val + b_val + roll_over) % 10)
+        sum_array.push((a_val + b_val + roll_over) % 10)
         roll_over = (a_val + b_val + roll_over)/10
         if !current_a
             a_ended = true
@@ -97,7 +96,8 @@ def add_two_numbers(l1, l2)
         if !current_b 
             b_ended = true
         end
-    end 
+    end
+    sum_array.reverse!
     previous_node = nil
     node = nil
     sum_array.each do |val|
