@@ -115,3 +115,52 @@ c = ListNode.new(5)
 c.next = b 
 
 p add_two_numbers(c, c)
+
+#median of two sorted arrays
+
+def find_median_sorted_arrays(nums1, nums2)
+    small_length, large_length = nums1.length, nums2.length
+    if small_length > large_length
+        nums1, nums2, small_length, large_length = nums2, nums1, large_length, small_length
+    end
+    if large_length == 0
+        raise ValueError
+    end
+
+    imin, imax, half_len = 0, small_length, (small_length + large_length + 1) / 2
+    while imin <= imax
+        i = (imin + imax) / 2
+        j = half_len - i
+        if i < small_length and nums2[j-1] > nums1[i]
+            # i is too small, must increase it
+            imin = i + 1
+        elsif i > 0 and nums1[i-1] > nums2[j]
+            # i is too big, must decrease it
+            imax = i - 1
+        else
+            # i is perfect
+
+            if i == 0
+                max_of_left = nums2[j-1]
+            elsif j == 0
+                 max_of_left = nums1[i-1]
+            else
+                max_of_left = [nums1[i-1], nums2[j-1]].max
+            end
+            
+            if (small_length + large_length) % 2 == 1
+                return max_of_left
+            end
+
+            if i == small_length
+                min_of_right = nums2[j]
+            elsif j == large_length
+                min_of_right = nums1[i]
+            else
+                min_of_right = [nums1[i], nums2[j]].min
+            end
+
+            return (max_of_left + min_of_right) / 2.0
+        end
+    end
+end
