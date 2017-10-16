@@ -67,7 +67,7 @@ class ListNode
 end
 
 def add_two_numbers(l1, l2) 
-    a_ended = false
+    first_ended = false
     b_ended = false
     current_a = l1
     current_b = l2
@@ -75,8 +75,8 @@ def add_two_numbers(l1, l2)
     b_val = 0
     roll_over = 0
     sum_array = []
-    until a_ended && b_ended && roll_over == 0
-        if a_ended
+    until first_ended && b_ended && roll_over == 0
+        if first_ended
             a_val = 0
         else 
             a_val = current_a.val
@@ -91,7 +91,7 @@ def add_two_numbers(l1, l2)
         sum_array.push((a_val + b_val + roll_over) % 10)
         roll_over = (a_val + b_val + roll_over)/10
         if !current_a
-            a_ended = true
+            first_ended = true
         end
         if !current_b 
             b_ended = true
@@ -220,4 +220,186 @@ def roman_to_int(s)
         end 
     end
     sum 
+end
+
+# find longest prefix
+
+def longest_prefix(strs)
+    return "" if strs.empty?
+    return strs[0] if strs.count == 1
+    return "" if strs.any? {|str| str == ""}
+    idx = 0 
+    prefix = ""
+    while strs[0].length > idx
+        possible = prefix + strs[0][x]
+        if strs.all? {|str| str[idx] == strs[0][idx]}
+            prefix = possible
+            idx += 1
+        else
+            break
+        end
+    end
+    prefix
+end
+
+# Given an array S of n integers, are there elements a, b, c in S
+#  such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+# Note: The solution set must not contain duplicate triplets.
+
+# very slow
+def three_sum(arr)
+   sums = arr.combination(3).select{|x,y,z| x+y+z==0}
+    sums.map! {|arr| arr.sort!}
+    uniq_sums = []
+    sums.each {|arr| uniq_sums << arr unless uniq_sums.include?(arr)}
+    uniq_sums
+end
+
+S = [0, 0, 0, 0, 0]
+# p three_sum(S)
+
+def valid_parens(str)
+    stack = []
+    parens = {"}" => "{", "]" => "[", ")" => "("}
+    str.each_char do |chr|
+        if parens.values.include?(chr)
+            stack.push(chr)
+        elsif parens.keys.include?(chr)
+            if stack == [] || stack.pop != parens[chr]
+                return false
+            end 
+        else 
+            return false 
+        end
+    end
+    stack == []
+end
+
+# p valid_parens("(({}))")
+# p valid_parens("[(])")
+
+
+    # def threeSum(self, nums):
+    #     if len(nums) <3: # deal with special input
+    #         return []
+    #     elif len(nums) == 3:
+    #         if sum(nums) == 0:
+    #             return [sorted(nums)]
+
+
+    #     nums = sorted(nums) # sorted, O(nlgn)
+    #     ans = []
+
+    #     for i in range(len(nums) -2):
+    #         j = i+1
+    #         k = len(nums) -1 # hence i < j < k
+
+    #         while j<k: # if not cross line
+    #             temp_sum = nums[i] + nums[j] + nums[k]
+    #             if temp_sum == 0:
+    #                 ans.append((nums[i], nums[j], nums[k]))
+
+    #             if temp_sum > 0: # which means we need smaller sum, move k backward, remember we sort the array
+    #                 k -= 1
+    #             else:
+    #                 j += 1
+
+    #     return list(set(tuple(ans))) # I bet this is not the best way to eliminate duplicate solutions
+
+def threesum(arr)
+    return [] if arr.length < 3
+    if arr.inject(:+) == 0 
+        return [arr.sort!]
+    end 
+    arr = arr.sort!
+    result = []
+    (0..arr.length-3).each do |i|
+        if i > 0 && nums[i] == nums[i-1] # avoid duplication
+            continue
+        end
+        j = i + 1
+        k = arr.length-1
+        while j < k
+            temp_sum = arr[i] + arr[j] + arr[k]
+            if temp_sum == 0 
+                result << [arr[i], arr[j], arr[k]]
+            end
+            if temp_sum > 0 
+                k -= 1
+            else
+                j += 1
+            end
+        end
+    end
+    result.uniq
+end
+
+# p threesum([-1,0,1,2,-1,-4])
+
+# Definition for singly-linked list.
+class ListNode
+    attr_accessor :val, :next
+    def initialize(val)
+        @val = val
+        @next = nil
+    end
+end
+
+# @param {ListNode} l1
+# @param {ListNode} l2
+# @return {ListNode}
+def merge_two_lists(l1, l2)
+    return nil unless l1 || l2
+    return l1 unless l2
+    return l2 unless l1
+    if l1.val > l2.val
+        first, second = l2, l1
+    else 
+        first, second = l1, l2
+    end
+    new_head = ListNode.new(first.val)
+    first = first.next
+    mid_node = new_head
+    while first || second
+        if first && second && first.val && second.val
+            if first.val > second.val
+                temp_node = ListNode.new(second.val)
+                second = second.next
+                mid_node.next = temp_node
+                mid_node = temp_node
+            else
+                temp_node = ListNode.new(first.val)
+                first = first.next
+                mid_node.next = temp_node
+                mid_node = temp_node
+            end
+        elsif first
+            temp_node = ListNode.new(first.val)
+            first = first.next
+            mid_node.next = temp_node
+            mid_node = temp_node
+        else
+            temp_node = ListNode.new(second.val)
+            second = second.next
+            mid_node.next = temp_node
+            mid_node = temp_node
+        end
+    end
+    new_head
+end
+
+# p merge_two_lists(ListNode.new(1), ListNode.new(2))
+
+# @param {String} haystack
+# @param {String} needle
+# @return {Integer}
+def str_str(haystack, needle)
+    return 0 if needle == ""
+    (0..((haystack.length-1)-(needle.length-1))).each do |idx|
+        if haystack[idx..idx+needle.length-1] == needle
+            return idx
+        end
+    end
+    -1
 end
