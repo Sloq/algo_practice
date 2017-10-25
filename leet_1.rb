@@ -497,3 +497,54 @@ def is_symmetric_helper(left, right)
     end
     is_symmetric_helper(left.left, right.right) && is_symmetric_helper(left.right, right.left)
 end
+
+def is_symmetric(root)
+    return true if root == nil
+    if root.left == nil || root.right == nil 
+        return root.left == root.right 
+    end
+    stack = []
+    stack.push(root.left)
+    stack.push(root.right)
+    while !stack.empty?
+        right = stack.pop 
+        left = stack.pop
+        return false unless right.value == left.value
+
+    end
+    true
+end
+
+def divide(dividend, divisor)
+    times = 0
+    neg = false
+    if (dividend < 0) ^ (divisor < 0 )
+        neg = true
+    end
+
+    if dividend < 0 
+        dividend = 0-dividend
+    end
+    if divisor < 0 
+        divisor = 0-divisor
+    end
+
+    while dividend > 0
+        jump = divisor
+        times_x = 1
+        while jump + jump <= dividend
+            jump += jump
+            times_x += times_x
+        end
+        dividend -= jump
+        if dividend >= 0
+            times += times_x
+        end
+    end
+    if neg
+        times =  0-times
+    end
+    return 2147483647 if times > 2147483647 
+    return -2147483648 if times < -2147483648
+    times
+end
