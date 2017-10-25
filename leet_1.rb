@@ -472,3 +472,28 @@ def is_same_tree(p, q)
     return false unless is_same_tree(p.right, q.right)
     true
 end
+
+# Definition for a binary tree node.
+# class TreeNode
+#     attr_accessor :val, :left, :right
+#     def initialize(val)
+#         @val = val
+#         @left, @right = nil, nil
+#     end
+# end
+
+# @param {TreeNode} root
+# @return {Boolean}
+def is_symmetric(root)
+    return root == nil || is_symmetric_helper(root.left, root.right)     
+end
+
+def is_symmetric_helper(left, right)
+    if (left == nil) || (right == nil)
+        return left == right
+    end
+    if left.val != right.val
+        return false
+    end
+    is_symmetric_helper(left.left, right.right) && is_symmetric_helper(left.right, right.left)
+end
