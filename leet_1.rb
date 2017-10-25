@@ -403,3 +403,72 @@ def str_str(haystack, needle)
     end
     -1
 end
+
+#generate all valid strings of parenthesis given n number of pairs
+
+def make_valid_parens(n)
+    valids = ["()"]
+    return "" if n == 0
+    x = 1
+    while x < n
+        new_arr = []
+        valids.each do |str|
+            new_arr << "(#{str})"
+        end
+        valids.each do |str|
+            new_arr << "()#{str}"
+        end
+        valids.each do |str|
+            new_arr << "#{str}()"
+        end
+        new_arr = new_arr.uniq
+        valids = new_arr
+        x += 1
+    end
+    return valids.uniq
+end
+
+def generate_parenthesis(n)
+    valids = ["()"]
+    return "" if n == 0
+    x = 1
+    while x < n
+        new_arr = []
+        valids.each do |str|
+            new_arr << "(#{str})"
+            new_arr << "()#{str}"
+            new_arr << "#{str}()"
+        end
+        new_arr = new_arr.uniq
+        valids = new_arr
+        x += 1
+    end
+    return valids.uniq
+end
+
+# p generate_parenthesis(10)
+
+# Definition for a binary tree node.
+# class TreeNode
+#     attr_accessor :val, :left, :right
+#     def initialize(val)
+#         @val = val
+#         @left, @right = nil, nil
+#     end
+# end
+
+# @param {TreeNode} p
+# @param {TreeNode} q
+# @return {Boolean}
+def is_same_tree(p, q)
+    if p == nil && q == nil 
+        return true
+    end
+    if p == nil || q == nil
+        return false
+    end
+    return false unless p.val == q.val
+    return false unless is_same_tree(p.left, q.left)
+    return false unless is_same_tree(p.right, q.right)
+    true
+end
