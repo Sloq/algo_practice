@@ -548,3 +548,62 @@ def divide(dividend, divisor)
     return -2147483648 if times < -2147483648
     times
 end
+
+def remove_element(nums, val)
+    i = 0
+    j = (nums.length - 1)
+    while j >= i
+        if nums[j] == val
+            j -= 1
+        elsif nums[i] == val
+            nums[i] = nums[j]
+            i += 1
+            j -= 1
+        else
+            i += 1
+        end
+    end
+    return [] if j == -1
+    nums[0..j]
+end
+
+# p remove_element([3, 3, 3, 3], 3)
+# p remove_element([3, 4, 7, 3], 7)
+# p remove_element([3, 3, 3, 3], 1)
+# p remove_element([7, 3, 3, 3], 3)
+# p remove_element([3, 7, 3, 3], 3)
+# p remove_element([3, 3, 3, 7], 3)
+# p remove_element([7, 3, 3, 7], 3)
+# p remove_element([], 3)
+
+def count_and_say(n)
+    return "" if n < 1
+    arr = [1]
+    while n > 1
+        new_arr = []
+        # count = 0
+        position_i = 0
+        position_j = 1
+        while position_i <= arr.length-1 
+            while arr[position_i] == arr[position_j]
+                position_j += 1
+            end
+            new_arr << position_j - position_i
+            new_arr << arr[position_i]
+            position_i = position_j
+            position_j += 1
+        end
+        arr = new_arr
+        n -= 1
+    end
+    arr.join('')
+end
+
+p count_and_say(1)
+p count_and_say(2)
+p count_and_say(3)
+p count_and_say(11)
+p count_and_say(12)
+
+
+
