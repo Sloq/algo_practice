@@ -607,5 +607,16 @@ def majority_element(nums)
     hash.max_by { |key, val| val }[0]
 end
 
+def trailing_zeroes(n)
+    trails = 0
+    n_five = n
+    while n_five > 0
+        n_five /= 5
+        trails += n_five
+    end
+    trails
+end
+
+
 
 
