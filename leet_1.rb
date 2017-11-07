@@ -599,11 +599,13 @@ def count_and_say(n)
     arr.join('')
 end
 
-p count_and_say(1)
-p count_and_say(2)
-p count_and_say(3)
-p count_and_say(11)
-p count_and_say(12)
+def majority_element(nums)
+    hash = Hash.new(0)
+    (0...nums.length).each do |num|
+        hash[nums[num]] += 1
+    end
+    hash.max_by { |key, val| val }[0]
+end
 
 
 
