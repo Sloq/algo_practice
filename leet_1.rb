@@ -617,6 +617,29 @@ def trailing_zeroes(n)
     trails
 end
 
+# Remove all empty folders from a system
+
+# assume given as an array
+
+def remove_empties(arr)
+    return nil if arr.empty?
+    new_arr = []
+    arr.each do |el|
+        if el.is_a?(Array)
+            new_el = remove_empties(el)
+            new_arr.push(new_el) if new_el
+        else
+            new_arr.push(el)
+        end
+    end 
+    new_arr
+end
+
+# p remove_empties([2, []])
+# p remove_empties([1, 2, [], 2, [3, 4], [1, [12, 1, [2, [], [12, [], 21, [12]]]]]])
+
+
+
 
 
 
