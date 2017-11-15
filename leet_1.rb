@@ -640,6 +640,28 @@ end
 
 
 
+#move all zeroes to the end of the array
+
+def zero_end(arr)
+    count = 0
+    (0..arr.length-1).each do |i|
+        if arr[i] != 0
+            arr[count] = arr[i]
+            count += 1
+        end
+    end
+
+    (count..arr.length-1).each do |j|
+        arr[j] = 0
+    end
+    arr
+end
+
+# iterate through the array check each element as we iterate, if it is a non zero we move it to the count of all non zero elements in the array
+
+# p zero_end([0, 1])
+# p zero_end([0, 1, 0])
+# p zero_end([0, 5, 7, 0, 1, 2, 3, 4, 0, 0, 9, 0])
 
 
 
