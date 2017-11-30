@@ -663,5 +663,24 @@ end
 # p zero_end([0, 1, 0])
 # p zero_end([0, 5, 7, 0, 1, 2, 3, 4, 0, 0, 9, 0])
 
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
 
+Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight without alerting the police.
+
+
+
+def rob(nums)
+    counter = 0 
+    a = 0
+    b = 0 
+    while counter < nums.length
+        if counter % 2 == 0 
+            a = [a + nums[counter], b].max
+        else
+            b = [a, b + nums[counter]].max
+        end
+        counter += 1
+    end
+    return [a, b].max
+end
 
