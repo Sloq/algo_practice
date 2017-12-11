@@ -704,22 +704,43 @@ public int helper(TreeNode root, int k) {
     return leftCount + rightCount + 1;
 }
 
+# def kth_smallest(root, k)
+#     answer = 0
+#     k_helper(root, k, answer)
+#     answer
+# end
+
+# def k_helper(root, k, answer)
+#     if root == nil 
+#         return 0
+#     end
+
+#     left_count = k_helper(root.left, k)
+#     right_count - k_helper(root.right, k - left_count - 1)
+
+#     if k == left_count + 1
+#         answer = root.val
+#     end 
+#     left_count + right_count + 1
+# end
+
 def kth_smallest(root, k)
-    answer = 0
-    k_helper(root, k, answer)
-    answer
+    $answer = 0
+    k_helper(root, k)
+    $answer
 end
 
-def k_helper(root, k, answer)
-    if root == nil 
+def k_helper(root, k)
+    unless root 
         return 0
     end
 
     left_count = k_helper(root.left, k)
-    right_count - k_helper(root.right, k - left_count - 1)
+    right_count = k_helper(root.right, k - left_count - 1)
 
     if k == left_count + 1
-        answer = root.val
-    end 
+        $answer = root.val
+    end
+
     left_count + right_count + 1
 end
