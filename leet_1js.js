@@ -45,3 +45,24 @@ def length_of_longest_substring(s)
     return max_length;
 end
 
+var generate = function(numRows) {
+    let triangle = [[1], [1, 1]];
+    if (numRows < 3) {
+        return triangle.slice(0, numRows);
+    }
+    
+    while (numRows > 2) {
+        let last = triangle.slice(-1)[0];
+        let newArr = [1];
+        for (i = 0; i < last.length-1; i++) {
+            newArr.push(last[i] + last[i+1]);
+        }
+        newArr.push(1);
+        numRows -= 1;
+        triangle.push(newArr);
+    }
+    return triangle;
+};
+
+
+console.log(generate(5));
