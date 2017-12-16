@@ -66,3 +66,17 @@ var generate = function(numRows) {
 
 
 console.log(generate(5));
+
+let fizzBuzz = function(arr) {
+    for (let i = 0; i < arr.length-1; i++) {
+        if (arr[i] % 3 === 0 && arr[i] % 5 === 0) {
+            console.log("fb")
+        }
+        if (arr[i] % 5 === 0) {
+            console.log("FizzBuzz")
+        }
+        if (arr[i] % 3 === 0) {
+            console.log("Fzz")
+        }
+    }
+}
